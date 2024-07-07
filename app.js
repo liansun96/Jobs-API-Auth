@@ -1,12 +1,30 @@
-require('dotenv').config()
-require('express-async-errors')
-const express = require('express')
-const app = express()
+require("dotenv").config();
+require("express-async-errors");
+const express = require("express");
+const app = express();
 
-app.get('/' , (req, res) => {
-    res.send('Hello Testing')
-})
+//middleware
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
-const port = process.env.PORT || 3000
+app.use(express.json());
 
-app.listen(port , console.log(`Server is listening on prot ${port}...`))
+//routes
+app.get("/", (req, res) => {
+  res.send("Jobs Api");
+});
+
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 3000;
+
+const start = async () => {
+  try {
+    app.listen(port, console.log(`Server is listening on prot ${port}...`));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
