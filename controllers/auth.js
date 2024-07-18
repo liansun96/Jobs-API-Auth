@@ -9,7 +9,7 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: { user: user.name }, token });
 };
 
-const login = async (req, res) => {
+const login = async (req, res) => { 
   const { email, password } = req.body;
   if (!email || !password) {
     throw new BadRequestError("Please Provide Email & Password");
